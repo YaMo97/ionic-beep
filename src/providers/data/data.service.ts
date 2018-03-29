@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, FirebaseObjectObservable } from 'angularfire2/database-deprecated';
+import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
 import { User } from 'firebase/app';
 import { Profile } from '../../models/profile/profile.interface';
 import "rxjs/add/operator/take";
@@ -8,15 +8,15 @@ import "rxjs/add/operator/take";
 @Injectable()
 export class DataService {
 
-  profileObject: FirebaseObjectObservable<Profile>;
+  profileObject: AngularFireObject<Profile>;
 
   constructor(private database: AngularFireDatabase) {
   }
 
   getProfile(user:User) {
-    this.profileObject = this.database.object(`/profiles/${user.uid}`, { preserveSnapshot: true });
+    this.profileObject = this.database.object(`/profiles/${user.uid}`);
  
-    return this.profileObject.take(1);
+    return this.profileObject.snapshotChanges().take(1);
   }
 
   async saveProfile(user: User, profile: Profile) {

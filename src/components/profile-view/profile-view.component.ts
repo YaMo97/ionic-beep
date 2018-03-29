@@ -31,7 +31,7 @@ export class ProfileViewComponent implements OnInit {
     this.loadingSpinner.present();
     this.auth.getAuthenticatedUser().subscribe((user: User) => {
       this.data.getProfile(user).subscribe((profile) => {
-        this.userProfile = <Profile>(profile as any).val();
+        this.userProfile = <Profile>profile.payload.val();
         this.loadingSpinner.dismiss();
       })
     });

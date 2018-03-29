@@ -31,8 +31,8 @@ export class LoginPage {
       }).present();
 
       this.data.getProfile(<User> event.result).subscribe((profile)  => {
-        console.log(profile);
-        (profile as any).val() ? this.navCtrl.setRoot('TabsPage') : this.navCtrl.setRoot('EditProfilePage');
+        console.log(profile.payload);
+        profile.payload.val() ? this.navCtrl.setRoot('TabsPage') : this.navCtrl.setRoot('EditProfilePage');
       });
     }
     else {
