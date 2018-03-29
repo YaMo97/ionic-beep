@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireDatabase, AngularFireObject } from 'angularfire2/database';
+import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { User } from 'firebase/app';
 import { Profile } from '../../models/profile/profile.interface';
 import "rxjs/add/operator/take";
@@ -9,8 +9,15 @@ import "rxjs/add/operator/take";
 export class DataService {
 
   profileObject: AngularFireObject<Profile>;
+  profileList: AngularFireList<Profile>;
 
   constructor(private database: AngularFireDatabase) {
+  }
+
+  searchUser(firstName: string) {
+    const query = this.database.list<Profile>('/profiles', ref => ref.orderByChild('firstName').equalTo(firstName)).valueChanges();
+
+    return query.take(1);
   }
 
   getProfile(user:User) {
