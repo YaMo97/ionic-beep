@@ -3,7 +3,6 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Channel } from "../../models/channel/channel.interface";
 import { Observable } from 'rxjs/Observable';
 
-
 @Injectable()
 export class ChatService {
 
@@ -15,6 +14,8 @@ export class ChatService {
   }
 
   getChannelListRef(): Observable<Channel[]> {
-    return this.database.list(`channel-names`).valueChanges();
+    return this.database.list(`channel-names`).snapshotChanges().map(actions => {
+      return actions.map(action => ( { $key: action.key, ...action.payload.val() }));
+    });
   }
 }
