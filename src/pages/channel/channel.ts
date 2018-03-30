@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, AlertController } from 'ionic-angular';
 import { ChatService } from '../../providers/chat/chat.service';
 import { Observable } from 'rxjs/Observable';
 import { Channel } from '../../models/channel/channel.interface';
@@ -13,7 +13,7 @@ export class ChannelPage {
 
   channelList: Observable<Channel[]>;
 
-  constructor(private chat: ChatService, private alertCtrl: AlertController) {
+  constructor(private navCtrl: NavController, private chat: ChatService, private alertCtrl: AlertController) {
   }
 
   ionViewWillLoad() {
@@ -46,4 +46,7 @@ export class ChannelPage {
     this.channelList = this.chat.getChannelListRef();
   }
 
+  selectChannel(channel: Channel) {
+    this.navCtrl.push('ChannelChatPage', { channel });
+  }
 }
