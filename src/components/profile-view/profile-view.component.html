@@ -2,7 +2,7 @@
   <img class="profile-view__image" src="assets/imgs/profile-placeholder.png" alt="Profile Picture">
 </div>
 
-<div *ngIf="userProfile">
+<div *ngIf="userProfile; else blank">
   <ion-card>
     <ion-card-content>
       <ion-item>
@@ -24,3 +24,28 @@
     </ion-card-content>
   </ion-card>
 </div>
+
+<ng-template #blank>
+  <div>
+    <ion-card>
+      <ion-card-content>
+        <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input [readonly]="true"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>First Name</ion-label>
+          <ion-input [readonly]="true"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Last Name</ion-label>
+          <ion-input [readonly]="true"></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-label floating>Date of Birth</ion-label>
+          <ion-input [readonly]="true"></ion-input>
+        </ion-item>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ng-template>
