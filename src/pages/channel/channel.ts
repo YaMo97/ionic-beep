@@ -1,13 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { ChatService } from '../../providers/chat/chat.service';
-
-/**
- * Generated class for the ChannelPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Observable } from 'rxjs/Observable';
+import { Channel } from '../../models/channel/channel.interface';
 
 @IonicPage()
 @Component({
@@ -16,7 +11,14 @@ import { ChatService } from '../../providers/chat/chat.service';
 })
 export class ChannelPage {
 
+  channelList: Observable<Channel[]>;
+
   constructor(private chat: ChatService, private alertCtrl: AlertController) {
+  }
+
+  ionViewWillLoad() {
+    // Get Channels
+    this.getChannels()
   }
 
   showAddChannelDialog() {
@@ -40,5 +42,8 @@ export class ChannelPage {
     }).present();
   }
   
+  getChannels() {
+    this.channelList = this.chat.getChannelListRef();
+  }
 
 }
