@@ -7,6 +7,9 @@ const messageList: Message[] = [];
 
 userList.forEach((user) => {
     messageList.push({ user: user, date: new Date(), lastMessage: 'Hello!' });
+    messageList.push({ user: user, date: new Date(), lastMessage: 'Hello!' });
+    messageList.push({ user: user, date: new Date(), lastMessage: 'Hello!' });
+    messageList.push({ user: user, date: new Date(), lastMessage: 'Hello!' });
 })
 
 export const MESSAGE_LIST = messageList;
