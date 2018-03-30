@@ -1,12 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage } from 'ionic-angular';
-
-/**
- * Generated class for the TabsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { Component, Input, ViewChild } from '@angular/core';
+import { IonicPage, Tabs } from 'ionic-angular';
 
 @IonicPage()
 @Component({
@@ -14,6 +7,11 @@ import { IonicPage } from 'ionic-angular';
   templateUrl: 'tabs.html',
 })
 export class TabsPage {
+
+  @ViewChild('myTabs') tabRef: Tabs;
+
+  tabColor: string;
+  selectedIndex: number;
 
   tab1Root: string;
   tab2Root: string;
@@ -26,4 +24,16 @@ export class TabsPage {
     this.tab3Root = 'ProfilePage';
   }
 
+  changeTabColor() {
+    this.selectedIndex = this.tabRef.getIndex(this.tabRef.getSelected());
+
+    switch (this.selectedIndex) {
+      case 0: this.tabColor = 'primary';
+      break;
+      case 1: this.tabColor = 'secondary';
+      break;
+      case 2: this.tabColor = 'danger';
+      break;
+    }
+  }
 }
