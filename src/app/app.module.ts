@@ -14,6 +14,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 import { AuthService } from '../providers/auth/auth.service';
 import { DataService } from '../providers/data/data.service';
+import { ChatService } from '../providers/chat/chat.service';
 
 
 @NgModule({
@@ -38,7 +39,8 @@ import { DataService } from '../providers/data/data.service';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AuthService,
-    DataService
+    DataService,
+    ChatService,
   ]
 })
 export class AppModule {}
