@@ -3,6 +3,8 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Channel } from "../../models/channel/channel.interface";
 import { Observable } from 'rxjs/Observable';
 import { ChannelMessage } from '../../models/channel/channel-message.interface';
+import { Message } from '../../models/message/message.interface';
+
 
 @Injectable()
 export class ChatService {
@@ -26,5 +28,9 @@ export class ChatService {
 
   async sendChannelChatMessage(channelKey: string, message: ChannelMessage) {
     await this.database.list(`channels/${channelKey}`).push(message);
+  }
+
+  async sendChat(message: Message) {
+    await this.database.list(`/messages/`).push(message);
   }
 }
