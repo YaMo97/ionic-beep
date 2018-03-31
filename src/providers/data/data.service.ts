@@ -20,7 +20,10 @@ export class DataService {
   }
 
   searchUser(firstName: string) {
-    const query = this.database.list<Profile>('/profiles', ref => ref.orderByChild('firstName').equalTo(firstName)).valueChanges();
+    const query = this.database.list<Profile>('/profiles', ref => ref.orderByChild('firstName').equalTo(firstName))
+      .snapshotChanges().map(profiles => {
+        return profiles.map(profile => ( { $key: profile.key, ...profile.payload.val() }));
+      });
 
     return query.take(1);
   }
