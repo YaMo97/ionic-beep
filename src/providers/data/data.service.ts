@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireDatabase, AngularFireObject, AngularFireList } from 'angularfire2/database';
 import { User } from 'firebase/app';
+import { database } from "firebase";
 import { Profile } from '../../models/profile/profile.interface';
 import "rxjs/add/operator/take";
 import "rxjs/add/operator/mergeMap";
@@ -26,8 +27,12 @@ export class DataService {
   getAuthenticatedUserProfile() {
     return this.authService.getAuthenticatedUser()
       .map(user => user.uid)
-      .mergeMap(authId => this.database.object(`profiles/${authId}`).valueChanges())
-      .take(1);
+      .mergeMap(authId => {
+        return this.database.object(`profiles/${authId}`).snapshotChanges().map(profile => ({ 
+          $key: profile.key, 
+          ...profile.payload.val()
+        }))
+      }).take(1);
   }
 
   getProfile(user:User) {
