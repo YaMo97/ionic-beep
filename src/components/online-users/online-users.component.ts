@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../../providers/data/data.service';
 import { Profile } from '../../models/profile/profile.interface';
 import { Observable } from 'rxjs/Observable';
+import { NavController } from 'ionic-angular';
 
 @Component({
   selector: 'app-online-users',
@@ -11,7 +12,12 @@ export class OnlineUsersComponent implements OnInit {
 
   onlineProfilesList: Observable<Profile[]>;
 
-  constructor(private data: DataService) {
+  constructor(private data: DataService, private navCtrl: NavController) {
+  }
+
+  ngOnInit(): void {
+    this.setUserOnline();
+    this.onlineProfilesList = this.data.getOnlineProfiles();
   }
 
   setUserOnline() {
@@ -22,9 +28,7 @@ export class OnlineUsersComponent implements OnInit {
     }); 
   }
 
-  ngOnInit(): void {
-    this.setUserOnline();
-    this.onlineProfilesList = this.data.getOnlineProfiles();
+  openChat(profile: Profile) {
+    this.navCtrl.push('MessagePage', { profile });
   }
-
 }
