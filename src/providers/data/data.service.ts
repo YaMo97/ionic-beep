@@ -7,6 +7,7 @@ import "rxjs/add/operator/take";
 import "rxjs/add/operator/mergeMap";
 
 import { AuthService } from '../auth/auth.service';
+import { Observable } from 'rxjs/Observable';
 
 
 @Injectable()
@@ -53,4 +54,26 @@ export class DataService {
     }
   }
 
+  setUserOnline(profile: Profile) {
+
+    const ref = database().ref(`online-users/${profile.$key}`);
+
+    try {
+      const $key = profile.$key;
+      delete profile.$key;
+      ref.update({...profile});
+      profile.$key = $key;
+      ref.onDisconnect().remove();
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  getOnlineProfiles(): Observable<Profile[]> {
+    return this.database.list(`online-users`).snapshotChanges()
+      .map(profiles => {
+        return profiles.map(profile => ({ $key: profile.key, ...profile.payload.val() }))
+      });
+    // return this.database.list<Profile>(`online-users`).valueChanges();
+  }
 }

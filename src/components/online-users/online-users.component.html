@@ -1,0 +1,9 @@
+<ion-list>
+    <ion-item-divider>Online Users</ion-item-divider>
+    <ion-item *ngFor="let profile of onlineProfilesList | async">
+        <ion-avatar item-left>
+            <img src="assets/imgs/avatar.png" alt="Avatar">
+        </ion-avatar>
+        <h2>{{profile.firstName}} {{profile.lastName}}</h2>
+    </ion-item>
+</ion-list>
