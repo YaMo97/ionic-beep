@@ -15,7 +15,7 @@
 
 <ion-content padding>
 
-  <app-chat-message *ngFor="let message of messageList; let i = index" [chatMessage]="message"></app-chat-message>
+  <app-chat-message *ngFor="let message of messageList | async" [userId]="userId" [chatMessage]="message"></app-chat-message>
 
 </ion-content>
 
