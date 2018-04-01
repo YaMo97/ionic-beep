@@ -53,8 +53,6 @@ export class MessagePage {
         },
         content: content
       };
-
-      console.log(message);
       
       await this.chat.sendChat(message);
     }
