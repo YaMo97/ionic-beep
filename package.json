@@ -1,8 +1,8 @@
 {
   "name": "beep",
-  "version": "0.0.1",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "version": "1.0.0",
+  "author": "Yatharth Manocha",
+  "homepage": "http://github.com/YaMo97",
   "private": true,
   "scripts": {
     "clean": "ionic-app-scripts clean",
@@ -37,5 +37,5 @@
     "@ionic/app-scripts": "3.1.8",
     "typescript": "~2.6.2"
   },
-  "description": "An Ionic project"
+  "description": "A Chat Application made with Ionic Framework and Firebase"
 }
