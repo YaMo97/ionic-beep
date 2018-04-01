@@ -1,15 +1,6 @@
 import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 
-
-// // Start writing Firebase Functions
-// // https://firebase.google.com/docs/functions/typescript
-//
-// export const helloWorld = functions.https.onRequest((request, response) => {
-//  response.send("Hello from Firebase!");
-// });
-
-
 admin.initializeApp(functions.config().firebase);
 
 export const addUserMessages = functions.database.ref(`/messages/{messageId}`)
@@ -24,3 +15,16 @@ export const addUserMessages = functions.database.ref(`/messages/{messageId}`)
             .child(messageKey).set(1)
             .catch(err => console.error(err));;
     });
+
+export const generateLastMessage = functions.database.ref(`/messages/{messageId}`)
+    .onWrite(event => {
+        const messageKey = event.data.key;
+        const messageValue = event.data.val();
+
+        admin.database().ref(`/last-messages/${messageValue.userFromId}/${messageValue.userToId}`)
+            .child('key').set(messageKey)
+            .catch(err => console.error(err));
+        admin.database().ref(`/last-messages/${messageValue.userToId}/${messageValue.userFromId}`)
+            .child('key').set(messageKey)
+            .catch(err => console.error(err));
+    })
